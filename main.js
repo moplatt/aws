@@ -53,8 +53,6 @@ async function loadStations(url) {
             console.log(feature);
             layer.bindPopup(`
                 <h4>${feature.properties.name} (${feature.geometry.coordinates[2]}m)</h4>
-                <address>${feature.properties.ADRESSE}</adress>
-                <a href="${feature.properties.WEITERE_INF}" target="wien">Webseite</a>
                 `);
         }
     }).addTo(overlays.stations)
