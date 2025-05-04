@@ -38,6 +38,27 @@ async function loadStations(url) {
     let response = await fetch(url);
     let jsondata = await response.json();
 
+    L.geoJSON(jsondata, {
+        attribution: "Datenquelle: <a href='https://lawinen.Report'>Lawine.Report</a>",
+        pointToLayer: function (feature, latlng) {
+            return L.marker(latlng, {
+                icon: L.icon({
+                    iconUrl: "icons/wifi.png",
+                    iconAnchor: [16, 37],
+                    popupAnchor: [0, -37] // popup um Bildhöhe nach oben verschieben
+                })
+            });
+        },
+        onEachFeature: function (feature, layer) {
+            console.log(feature);
+            layer.bindPopup(`
+                <h4>${feature.properties.name} (${feature.geometry.coordinates[2]}m)</h4>
+                <address>${feature.properties.ADRESSE}</adress>
+                <a href="${feature.properties.WEITERE_INF}" target="wien">Webseite</a>
+                `);
+        }
+    }).addTo(overlays.stations)
+
     // Wetterstationen mit Icons und Popups
 
 }
