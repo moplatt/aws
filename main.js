@@ -16,6 +16,7 @@ let overlays = {
     temperature: L.featureGroup(),
     wind: L.featureGroup().addTo(map),
     snow: L.featureGroup(),
+    direction: L.featureGroup().addTo(map),
 }
 
 // Layer control
@@ -30,8 +31,9 @@ L.control.layers({
 }, {
     "Wetterstationen": overlays.stations,
     "Temperatur": overlays.temperature,
-    "Windgeschwindigkeit": overlays.wind,
+    //"Windgeschwindigkeit": overlays.wind,
     "Schneehöhe": overlays.snow,
+    "Windrichtung": overlays.direction
 }).addTo(map);
 
 // Maßstab
@@ -65,14 +67,16 @@ async function loadStations(url) {
                   <li>Relative Luftfeuchte (%) ${feature.properties.RH  || "-"}</li>
                   <li>Windgeschwindigkeit (km/h) ${feature.properties.WG || "-"}</li>
                   <li>Schneehöhe (cm) ${feature.properties.HS || "-"}</li>
+                  <li>Windrichtung (°) ${feature.properties.WR || "-"}</li>
                 </ul>
                 <span>${pointInTime.toLocaleString()}</span>
             `);
         }
     }).addTo(overlays.stations)
     showTemperature(jsondata);
-    showWind(jsondata);
+    //showWind(jsondata);
     showSnow(jsondata);
+    showDirection(jsondata);
 }
 loadStations("https://static.avalanche.report/weather_stations/stations.geojson");
 
@@ -134,6 +138,25 @@ function showSnow(jsondata) {
     }).addTo(overlays.snow);
 }
 
+function showDirection(jsondata) {
+    L.geoJSON(jsondata, {
+        filter: function(feature) {
+            console.log(feature.properties)
+            if (feature.properties.WR > -1 && feature.properties.WR < 10000) {
+                return true;
+            }
+        },
+        pointToLayer: function(feature, latlng) {
+            let color = getColor(feature.properties.WG, COLORS.wind);
+            return L.marker(latlng, {
+                icon: L.divIcon({
+                    className: "aws-div-icon",
+                    html: `<span style="background-color:${color}">${feature.properties.WR.toFixed(1)}</span>`
+                }),
+            })
+        },
+    }).addTo(overlays.direction);
+}
 
 function getColor(value, ramp) {
     for (let rule of ramp) {
