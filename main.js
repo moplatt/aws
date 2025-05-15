@@ -14,7 +14,7 @@ let map = L.map("map").setView([ibk.lat, ibk.lng], ibk.zoom);
 let overlays = {
     stations: L.featureGroup(),
     temperature: L.featureGroup(),
-    wind: L.featureGroup().addTo(map),
+    wind: L.featureGroup(),
     snow: L.featureGroup(),
     direction: L.featureGroup().addTo(map),
 }
@@ -32,7 +32,7 @@ L.control.layers({
 }, {
     "Wetterstationen": overlays.stations,
     "Temperatur": overlays.temperature,
-    //"Windgeschwindigkeit": overlays.wind,
+    "Windgeschwindigkeit": overlays.wind,
     "Schneehöhe": overlays.snow,
     "Windrichtung": overlays.direction
 }).addTo(map);
@@ -75,7 +75,7 @@ async function loadStations(url) {
         }
     }).addTo(overlays.stations)
     showTemperature(jsondata);
-    //showWind(jsondata);
+    showWind(jsondata);
     showSnow(jsondata);
     showDirection(jsondata);
 }
@@ -163,7 +163,7 @@ function showDirection(jsondata) {
             let color = getColor(feature.properties.WG, COLORS.wind);
             return L.marker(latlng, {
                 icon: L.divIcon({
-                    className: "aws-div-icon-wind",
+                    className: "aws-div-icon-direction",
                     html: `<span ><i style="transform:rotate(${feature.properties.WR}deg);
                     color:${color}"class="fa-solid fa-circle-arrow-down">`
                 }),
