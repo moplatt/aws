@@ -24,15 +24,16 @@ const COLORS = {
         { min: 80, max: 250, color: "#ff3232" },
     ],
 
-    snow: [
-        { min: 1, max: 10, color: "#ffdf80" },
-        { min: 10, max: 25, color: "#46dd6a" },
-        { min: 25, max: 50, color: "#66e8e7" },
-        { min: 50, max: 100, color: "#48e8fe" },
-        { min: 100, max: 200, color: "#3a87ea" },
-        { min: 200, max: 300, color: "#3f5dda" },
-        { min: 300, max: 400, color: "#8881d7" },
-        { min: 400, max: 100000, color: "#a53cdb" },
+    snow:[
+        {min: 0, max: 1, color:"#fff"},
+        {min: 1, max: 10, color:"#ffffb2"},
+        {min: 10, max: 25, color:"#b0ffbc"},
+        {min: 25, max: 50, color:"#8cffff"},
+        {min: 50, max: 100, color:"#19cdff"},
+        {min: 100, max: 200, color:"#1982ff"},
+        {min: 200, max: 300, color:"#0f5abe"},
+        {min: 300, max: 400, color:"#784bff"},
+        {min: 400, max: 20000, color:"#cd0feb"},
     ],
 };
 
