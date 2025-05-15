@@ -143,7 +143,7 @@ function showSnow(jsondata) {
             let color = getColor(feature.properties.HS, COLORS.snow);
             return L.marker(latlng, {
                 icon: L.divIcon({
-                    className: "aws-div-icon",
+                    className: "aws-div-icon-snow",
                     html: `<span style="background-color:${color}">${feature.properties.HS.toFixed(1)}</span>`
                 }),
             })
@@ -163,8 +163,9 @@ function showDirection(jsondata) {
             let color = getColor(feature.properties.WG, COLORS.wind);
             return L.marker(latlng, {
                 icon: L.divIcon({
-                    className: "aws-div-icon",
-                    html: `<span style="background-color:${color}">${feature.properties.WR.toFixed(1)}</span>`
+                    className: "aws-div-icon-wind",
+                    html: `<span style="transform:rotate(${feature.properties.WR}deg);
+                    background-color:${color}"><i class="fa-solid fa-circle-arrow-down">`
                 }),
             })
         },
